@@ -25,6 +25,12 @@ public class UserRepository {
 
     public Optional<User> getUserByUserId(Integer userId) {
         return userMapper.getUserByUserId(userId);
-
     }
+
+    public int editUser(User user) {
+        return userMapper.editUser(user);
+    }
+
+
+
 }

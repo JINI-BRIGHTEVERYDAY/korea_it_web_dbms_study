@@ -1,6 +1,8 @@
 package com.koreait.dbms_study.service;
 
 import com.koreait.dbms_study.dto.AddUserReqDto;
+import com.koreait.dbms_study.dto.ApiRespDto;
+import com.koreait.dbms_study.dto.EditUserReqDto;
 import com.koreait.dbms_study.entity.User;
 import com.koreait.dbms_study.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,18 @@ public class UserService {
         }
         response.put("user", user);
         return response;
+    }
+
+    public ApiRespDto<User> editUser(EditUserReqDto editUserReqDto) {
+        Optional<User> user = userRepository.getUserByUserId(editUserReqDto.getUserId());
+        if(user.isEmpty()) {
+            return new ApiRespDto<>("해당 유저가 존재하지 않습니다", null);
+        }
+
+        int result = userRepository.editUser(editUserReqDto.toEntity());
+        if (result == 0) {
+            return new ApiRespDto<>("문제가 발생하였습니다.", null);
+        }
+        return new ApiRespDto<>("성공적으로 수정이 완료되었습니다", null);
     }
 }
