@@ -28,6 +28,7 @@ public class UserController {
 
     @GetMapping("/get/list")
     public ResponseEntity<?> getUserList() {
+
         return ResponseEntity.ok(userService.getUserList());
     }
 
@@ -45,4 +46,10 @@ public class UserController {
     public ResponseEntity<?> editUser(@RequestBody EditUserReqDto editUserReqDto) {
         return ResponseEntity.ok(userService.editUser(editUserReqDto));
     }
+
+    @PostMapping("/remove")
+    public ResponseEntity<?> removeUser(@RequestParam Integer userId) {
+        return ResponseEntity.ok(userService.removeUser(userId));
+    }
+
 }
