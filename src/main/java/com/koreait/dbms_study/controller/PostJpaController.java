@@ -10,6 +10,37 @@ package com.koreait.dbms_study.controller;
 // 장점 => SQL없이 빠르게 CRUD 가능, 코드량이 줄어든다
 // 단점 => 복잡한 쿼리는 어렵고 추적/디버깅이 까다롭다
 
+import com.koreait.dbms_study.dto.AddPostReqDto;
+import com.koreait.dbms_study.dto.EditPostReqDto;
+import com.koreait.dbms_study.service.PostJpaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/jpa/post")
 public class PostJpaController {
+
+    @Autowired
+    private PostJpaService postJpaService;
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addPost(@RequestBody AddPostReqDto addPostReqDto) {
+        return ResponseEntity.ok(postJpaService.addPost(addPostReqDto));
+    }
+
+    @GetMapping("/get/list")
+    public ResponseEntity<?> getPostList() {
+        return ResponseEntity.ok(postJpaService.getPostList());
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editPost(@RequestBody  EditPostReqDto editPostReqDto) {
+        return ResponseEntity.ok(postJpaService.editPost(editPostReqDto));
+    }
+
+    @PostMapping("/remove")
+    public ResponseEntity<?> removePost(@RequestParam Integer postId) {
+        return ResponseEntity.ok(postJpaService.removePost(postId));
+    }
 }
